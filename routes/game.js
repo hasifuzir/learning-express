@@ -1,14 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
+//load the manifest JSOn file
 const games = require('../public/json/manifest.json');
 
+//Returns game details page based on specific ID as parameter
 router.get('/:id', function(req, res) {
   //Use JS find() method, returns the array element value if any elements in the array match
-  //tripe equals means to compare equal and of same type
-  let game = games.items.find(it => it.id === req.params.id); //ECMAScript 2015 arrow function used here
+  let game = games.items.find(it => it.id === req.params.id);
 
-  res.render('game', {
+  return res.render('game', {
     title: game.name,
     game,
   });
