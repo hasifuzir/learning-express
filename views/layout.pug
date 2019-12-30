@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title #{title} | WhatGame
+
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+
+    block links
+      link(rel='shortcut icon', href='/favicon.ico', type='image/x-icon')
+      link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+      link(rel='stylesheet', href='/stylesheets/style.css')
+
+    block scripts
+      script(src='/javascripts/bootstrap.min.js')
+
+  body
+    block navBar
+      nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+        a.navbar-brand(href='/') WhatGame
+
+        div.navbar-nav
+            a.nav-item.nav-link.nav-home(href='/') Home
+            a.nav-item.nav-link.nav-about(href='/about') About
+
+    block content

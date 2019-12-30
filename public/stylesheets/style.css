@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400');
+
+:root {
+  --header-font: "Raleway", Helvetica, Arial, sans-serif;
+  --core-font: "Raleway", Helvetica, Arial, sans-serif;
+
+  --primary: #ffffff;
+
+  --ui-border: 1px solid lightgrey;
+}
+
+h1, h2 {
+  font-family: var(--header-font);
+  font-weight: bold;
+
+  color: #000000;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--core-font);
+  -webkit-font-smoothing: antialiased;
+  background-color: #f0f0f0;
+}
+
+img {
+  vertical-align: middle;
+  transition: .5s ease;
+}
+
+img:hover {
+  opacity: 0.8;
+}
+
+.btn {
+  background-color: white;
+  border: 1px solid #cccccc;
+  color: #696969;
+  padding: 0.5rem;
+}
+
+.hero-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background: white;
+  padding: 10px;
+
+  border-bottom: var(--ui-border);
+}
+
+.hero-text {
+  text-align: center;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.library {
+  display: flex;
+  flex-flow: wrap;
+  margin: 0;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.card{
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 19%;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.card-img-top {
+  align-self: center;
+}
+
+.game-image {
+  padding: 5px;
+}
+
+.card-title {
+  font-size: 20px;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.game-profile {
+  padding: 10px;
+}

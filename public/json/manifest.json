@@ -1,0 +1,78 @@
+{
+  "totalID": "6",
+  "items" : [
+    {
+      "id": "metroexodus",
+      "name": "Metro Exodus",
+      "developer": "4A Games",
+      "publisher": "Deep Silver",
+      "releaseDate": "15 February 2019",
+      "platform": ["PC", "PlayStation 4", "Xbox One", "Stadia"],
+      "genre": ["FPS"],
+      "description": "Metro Exodus is an epic, story-driven first person shooter from 4A Games that blends deadly combat and stealth with exploration and survival horror in one of the most immersive game worlds ever created.",
+      "imgSrc": "metro-exodus.png"
+    },
+
+    {
+      "id": "sekiro",
+      "name": "Sekiro: Shadows Die Twice",
+      "developer": "FromSoftware",
+      "publisher": "Activision",
+      "releaseDate": "22 March 2019",
+      "platform" : ["PC", "PlayStation 4", "Xbox One"],
+      "genre": ["Action-adventure"],
+      "description": "In Sekiro: Shadows Die Twice you are the one-armed wolf, a disgraced and disfigured warrior rescued from the brink of death. Bound to protect a young lord who is the descendant of an ancient bloodline, you become the target of many vicious enemies, including the dangerous Ashina clan. When the young lord is captured, nothing will stop you on a perilous quest to regain your honor, not even death itself.",
+      "imgSrc": "sekiro.jpg"
+    },
+
+    {
+      "id": "deathstranding",
+      "name": "Death Stranding",
+      "developer": "Kojima Productions",
+      "publisher": "Sony Interactive Entertainment",
+      "releaseDate": "8 November 2019",
+      "platform" : ["PC", "PlayStation 4"],
+      "genre": ["Action-adventure"],
+      "description": "From legendary game creator Hideo Kojima comes an all-new, genre-defying experience. Sam Bridges must brave a world utterly transformed by the Death Stranding. Carrying the disconnected remnants of our future in his hands, he embarks on a journey to reconnect the shattered world one step at a time.",
+      "imgSrc": "deathstranding.jpg"
+    },
+
+    {
+      "id": "control",
+      "name": "Control",
+      "developer": "Remedy Entertainment",
+      "publisher": "505 Games",
+      "releaseDate": "27 August 2019",
+      "platform" : ["PC", "PlayStation 4", "Xbox One"],
+      "genre": ["Third-person shooter", "Action-adventure"],
+      "description": "After a secretive agency in New York is invaded by an otherworldly threat, you become the new Director struggling to regain Control in this supernatural 3rd person action-adventure from Remedy Entertainment and 505 Games.",
+      "imgSrc": "control.jpg"
+    },
+
+    {
+      "id": "re2",
+      "name": "Resident Evil 2 (2019)",
+      "developer": "Capcom R&D Division 1",
+      "publisher": "Capcom",
+      "releaseDate": "25 January 2019",
+      "platform" : ["PC", "PlayStation 4", "Xbox One"],
+      "genre": ["Survival horror"],
+      "description": "A deadly virus engulfs the residents of Raccoon City in September of 1998, plunging the city into chaos as flesh eating zombies roam the streets for survivors. An unparalleled adrenaline rush, gripping storyline, and unimaginable horrors await you. Witness the return of Resident Evil 2. ",
+      "imgSrc": "re2.jpg"
+    },
+
+    {
+      "id": "outerworlds",
+      "name": "The Outer Worlds",
+      "developer": "Obsidian Entertainment",
+      "publisher": "Private Division",
+      "releaseDate": "25 October 2019",
+      "platform" : ["PC", "PlayStation 4", "Xbox One", "Nintendo Switch"],
+      "genre": ["Action", "RPG"],
+      "description": "    The Outer Worlds is a new single-player sci-fi RPG from Obsidian Entertainment and Private Division. As you explore a space colony, the character you decide to become will determine how this player-driven story unfolds. In the corporate equation for the colony, you are the unplanned variable.",
+      "imgSrc": "outerworlds.png"
+    }
+
+
+  ]
+}
