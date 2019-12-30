@@ -1,27 +1,28 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
+//Load the manifest JSON file
 const games = require('../public/json/manifest.json');
 
-//Return all games
+//Returns all games and its details as JSON
 router.get('/all', function(req, res) {
-  res.json(games.items);
+  return res.json(games.items);
 });
 
-//Return all IDs
-//Why can't this be below?
+//Return list of IDs as JSON
 router.get('/id_list', function(req, res) {
-  for (let i = 0; i < games.items.length; i++) {
-    let id = games.items[i].id;
-    res.write(id + '\n');
-  }
-  res.end();
+  //map() iterates through games.items array and returns an object array of corresponding key 'id'
+  const gameIds = games.items.map(game => game.id);
+
+  return res.json(gameIds)
 });
 
-//Return specific game (based on ID)
-router.get('/:id', function(req, res) {
+//Return specific game details (based on ID) as JSON
+router.get('/game/:id', function(req, res) {
+  //find iterates through games.items and returns first object corresponding to parameter (TRUE)
   let game = games.items.find(it => it.id === req.params.id);
-  res.json(game);
+
+  return res.json(game);
 });
 
 module.exports = router;
