@@ -10,7 +10,8 @@
       "platform": ["PC", "PlayStation 4", "Xbox One", "Stadia"],
       "genre": ["FPS"],
       "description": "Metro Exodus is an epic, story-driven first person shooter from 4A Games that blends deadly combat and stealth with exploration and survival horror in one of the most immersive game worlds ever created.",
-      "imgSrc": "metro-exodus.png"
+      "imgSrc": "metro-exodus.png",
+      "platformId": ["pc", "ps4", "xb1", "stadia"]
     },
 
     {
@@ -22,7 +23,8 @@
       "platform" : ["PC", "PlayStation 4", "Xbox One"],
       "genre": ["Action-adventure"],
       "description": "In Sekiro: Shadows Die Twice you are the one-armed wolf, a disgraced and disfigured warrior rescued from the brink of death. Bound to protect a young lord who is the descendant of an ancient bloodline, you become the target of many vicious enemies, including the dangerous Ashina clan. When the young lord is captured, nothing will stop you on a perilous quest to regain your honor, not even death itself.",
-      "imgSrc": "sekiro.jpg"
+      "imgSrc": "sekiro.jpg",
+      "platformId": ["pc", "ps4", "xb1"]
     },
 
     {
@@ -34,7 +36,8 @@
       "platform" : ["PC", "PlayStation 4"],
       "genre": ["Action-adventure"],
       "description": "From legendary game creator Hideo Kojima comes an all-new, genre-defying experience. Sam Bridges must brave a world utterly transformed by the Death Stranding. Carrying the disconnected remnants of our future in his hands, he embarks on a journey to reconnect the shattered world one step at a time.",
-      "imgSrc": "deathstranding.jpg"
+      "imgSrc": "deathstranding.jpg",
+      "platformId": ["pc", "ps4"]
     },
 
     {
@@ -46,7 +49,8 @@
       "platform" : ["PC", "PlayStation 4", "Xbox One"],
       "genre": ["Third-person shooter", "Action-adventure"],
       "description": "After a secretive agency in New York is invaded by an otherworldly threat, you become the new Director struggling to regain Control in this supernatural 3rd person action-adventure from Remedy Entertainment and 505 Games.",
-      "imgSrc": "control.jpg"
+      "imgSrc": "control.jpg",
+      "platformId": ["pc", "ps4", "xb1"]
     },
 
     {
@@ -58,7 +62,8 @@
       "platform" : ["PC", "PlayStation 4", "Xbox One"],
       "genre": ["Survival horror"],
       "description": "A deadly virus engulfs the residents of Raccoon City in September of 1998, plunging the city into chaos as flesh eating zombies roam the streets for survivors. An unparalleled adrenaline rush, gripping storyline, and unimaginable horrors await you. Witness the return of Resident Evil 2. ",
-      "imgSrc": "re2.jpg"
+      "imgSrc": "re2.jpg",
+      "platformId": ["pc", "ps4", "xb1"]
     },
 
     {
@@ -70,7 +75,8 @@
       "platform" : ["PC", "PlayStation 4", "Xbox One", "Nintendo Switch"],
       "genre": ["Action", "RPG"],
       "description": "    The Outer Worlds is a new single-player sci-fi RPG from Obsidian Entertainment and Private Division. As you explore a space colony, the character you decide to become will determine how this player-driven story unfolds. In the corporate equation for the colony, you are the unplanned variable.",
-      "imgSrc": "outerworlds.png"
+      "imgSrc": "outerworlds.png",
+      "platformId": ["pc", "ps4", "xb1", "ns"]
     }
 
 
