@@ -1,4 +1,5 @@
 const express = require('express');
+const _ = require('lodash');
 const router = express.Router();
 
 //Load the manifest JSON file
@@ -23,6 +24,23 @@ router.get('/game/:id', function(req, res) {
   let game = games.items.find(it => it.id === req.params.id);
 
   return res.json(game);
+});
+
+//Return all games based on specified platform ID as JSON
+//Uses lodash, but you can also use filter() + inludes() instead!
+/*
+router.get('/platform/:id', function(req, res) {
+  let gameList = _.filter(games.items, {"platformId" : [req.params.id]});
+
+  return res.json(gameList);
+});
+ */
+
+//Return all games based on specified platform ID as JSON
+router.get('/platform/:id', function(req, res) {
+  let gameList = games.items.filter(it => it.platformId.includes(req.params.id));
+
+  return res.json(gameList);
 });
 
 module.exports = router;
