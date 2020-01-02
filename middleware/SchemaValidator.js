@@ -4,27 +4,39 @@ const Joi = require('joi');
 
 const apiResponse = require('../helpers/apiResponse');
 
+const createError = (errorCode, errorMessage) => ({errorCode, errorMessage});
+
+const returnError = (res, errors) => {
+    const errs = [];
+    errors.forEach((err) => {
+        const { details } = err;
+        const message = details.map(i => i.message).join(',');
+        errs.push(createError('VALIDATION_ERROR', message));
+    })
+    return res.json(apiResponse.response('422', 'Validation error', {errors: errs}));
+}
+
 //This middleware is separated into a new function
-const paramsId = (schema) => {
-
-    return (req, res, next) => {
-        const {error} = Joi.validate(req.params.id, schema);
-
-        const valid = error == null;
-
-        if (valid) {
-            console.log('Validated!');
-            next();
+const validator = (schema) => (req, res, next) => {
+    const errors = [];
+    Object.keys(schema).forEach((key) => {
+        if (key === 'query') {
+            const { error } = Joi.validate(req.query, schema[key]);
+            if (error) {
+                errors.push(error);
+            }
         }
-        else {
-            const {details} = error;
-            const message = details.map(i => i.message).join(',');
-
-            console.log("error", message);
-            res.json(apiResponse.fail('422', 'Validation error', 'VALIDATION_ERROR', message));
-
+        if (key === 'params') {
+            const { error } = Joi.validate(req.params, schema[key]);
+            if (error) {
+                errors.push(error);
+            }
         }
+    });
+    if (errors.length) {
+        return returnError(res, errors);
     }
+    return next();
 };
 
-module.exports = {paramsId};
+module.exports = validator;

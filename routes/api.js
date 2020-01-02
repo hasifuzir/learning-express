@@ -46,7 +46,7 @@ router.get('/id_list', function(req, res, next) {
 });
 
 //Return specific game details (based on ID) as JSON
-router.get('/game/:id', schemaValidator.paramsId(schemas.idSchema), (req, res, next) => {
+router.get('/game/:id', schemaValidator(schemas.gameDetailSchema), (req, res, next) => {
   try{
     //find iterates through games.items and returns first object corresponding to parameter (TRUE)
     let game = games.items.find(it => it.id === req.params.id);
@@ -69,7 +69,7 @@ router.get('/game/:id', schemaValidator.paramsId(schemas.idSchema), (req, res, n
 });
 
 //Return all games based on specified platform ID as JSON
-router.get('/platform/:id', schemaValidator.paramsId(schemas.idSchema), function(req, res, next) {
+router.get('/platform/:id', /*schemaValidator.paramsId(schemas.idSchema)*/ function(req, res, next) {
   try{
     //Explanation goes here
     let gameList = games.items.filter(it => it.platformId.includes(req.params.id));

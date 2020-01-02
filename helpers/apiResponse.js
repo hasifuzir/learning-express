@@ -21,7 +21,10 @@ let fail= (code, message, errorCode, errorMessage) => {
     }
 };
 
+const response = (responseCode, responseMessage, response) => ({responseCode, responseMessage, response})
+
 module.exports = {
     success,
-    fail
+    fail,
+    response
 };
