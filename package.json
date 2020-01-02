@@ -12,9 +12,11 @@
     "http-errors": "~1.7.3",
     "morgan": "~1.9.1",
     "pug": "2.0.4",
-    "body-parser": "latest"
+    "body-parser": "latest",
+    "lodash": "latest"
   },
   "devDependencies": {
+    "celebrate": "^11.0.0",
     "joi": "^14.3.1"
   }
 }
