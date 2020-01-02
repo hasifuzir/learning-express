@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    div.hero-image
+        div.hero-text
+            h1 #{userName}
+
+    div.top
+        h2.centered-text You have #{total} favourite games.
+
+    div.library
+        each game in favArray
+            div.card
+                img.card-img-top(src=`/images/${game.imgSrc}`, alt = `${game.name} Image`)
+                div.card-body
+                    h3.card-title #{game.name}
+                ul.list.group.list-group-flush
+                    li.list-group-item #{game.developer}
+                    li.list-group-item #{game.platform}
+                div.card-body
+                    a.card-link(href = `/game/${game.id}`) View Details
+
+    div.wishlist
+        h3 Wishlist
+        p Add your wishlist below:
+
+        form.form-inline(action ='/profile/addWishlist' method='POST')
+            div.form-group.mr-sm-2
+                label.mr-sm-2(for='wishName') Game:
+                input#wishName.form-control.mr-sm-2(type='text', placeholder='Type game name' name='wishName')
+                button.btn.btn-primary(type='submit') Submit
+
+
