@@ -96,6 +96,7 @@ img:hover {
 
 .card-title {
   font-size: 20px;
+  color: black;
 }
 
 .card-body {
@@ -104,4 +105,18 @@ img:hover {
 
 .game-profile {
   padding: 10px;
+}
+
+.game-info-overlay{
+  color: white;
+}
+
+.game-image {
+  filter: brightness(30%);
+  max-width: 100%;
+  height: auto;
+}
+
+.game-description {
+  font-size: 18px;
 }

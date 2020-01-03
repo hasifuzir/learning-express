@@ -3,12 +3,12 @@ const createError = require('http-errors');
 
 const router = express.Router();
 
-const throwError = () => {throw new Error('You purposely threw this error!')};
+//const throwError = () => {throw new Error('You purposely threw this error!')};
 
 //Render the About page
 router.get('/', function(req, res, next) {
   try{
-    throwError();
+    //throwError();
 
     res.status(200);
 

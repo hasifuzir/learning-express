@@ -16,6 +16,7 @@ router.get('/:id', function(req, res, next) {
       res.status(200);
 
       return res.render('game', {
+        apiGame: false,
         title: game.name,
         game,
       });

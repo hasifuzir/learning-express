@@ -4,14 +4,9 @@ const createError = require('http-errors'); //to create HTTP errors for Express
 const express = require('express'); //use Express
 const path = require('path'); //to work with file and directory paths
 const logger = require('morgan'); //HTTP request logger middleware
-const fs = require('fs'); //FileSystem module so we can load JSON files
-const Joi = require('joi'); //for data validation
+//const fs = require('fs'); //FileSystem module so we can load JSON files
+//const Joi = require('joi'); //for data validation
 const bodyParser = require('body-parser');
-
-//Middleware
-const schemaValidator = require('./middleware/validator');
-const schemas = require('./helpers/schemas');
-
 
 // Routers
 const indexRouter = require('./routes/index');
@@ -20,6 +15,7 @@ const gameRouter = require('./routes/game');
 const profileRouter = require('./routes/profile');
 const apiRouter = require('./routes/api');
 const settingsRouter = require('./routes/settings');
+const releasesRouter = require('./routes/releases');
 
 const app = express(); //create an app object of the Express module
 
@@ -41,6 +37,7 @@ app.use('/game', gameRouter);
 app.use('/profile', profileRouter);
 app.use('/api', apiRouter);
 app.use('/settings', settingsRouter);
+app.use('/releases', releasesRouter)
 
 // General route error handling fn(goes at the bottom of stack!)
 // Catches anything that isn't defined by the routers and gives a 404 error, every time user makes request

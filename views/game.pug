@@ -1,16 +1,41 @@
 extends layout
 
 block content
-  div.game-profile.card
-      div.game-image
-          img(src=`/images/${game.imgSrc}`, alt = `${game.name} Image`)
-      div.game-info
-          h1.game-name.border-top.border-bottom #{game.name}
-          div.game-details
-            h5 Developer: #{game.developer}
-            h5 Publisher: #{game.publisher}
-            h5 Release Date: #{game.releaseDate}
-            h5 Platform: #{game.platform}
-            h5 Genre: #{game.genre}
-      div.game-description.border-top
-          p #{game.description}
+    if !apiGame
+      div.game-profile.card
+          div.game-image
+              img(src=`/images/${game.imgSrc}`, alt = `${game.name} Image`)
+          div.game-info
+              h1.game-name.border-top.border-bottom #{game.name}
+              div.game-details
+                h5 Developer: #{game.developer}
+                h5 Publisher: #{game.publisher}
+                h5 Release Date: #{game.releaseDate}
+                h5 Platform: #{game.platform}
+                h5 Genre: #{game.genre}
+          div.game-description.border-top
+              p #{game.description}
+
+    else if apiGame
+        div.game-profile.card
+            img.card-img.game-image(src=`${game.background_image}`, alt = `${game.name} Image`)
+            div.game-info-overlay.card-img-overlay
+                h1.game-info-overlay #{game.name}
+                div.game-details
+                    h4
+                        | Platform:&nbsp;
+                        span
+                        each platform, index in game.platforms
+                            span #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
+                    h4
+                        | Developer:&nbsp;
+                        each dev, index in game.developers
+                            span #{dev.name} #{(index < game.developers.length-1) ? ' / ' : ''}
+                    h4
+                        | Genre:&nbsp;
+                        each genre, index in game.genres
+                            span #{genre.name} #{(index < game.genres.length - 1) ? ' / ' : ''}
+                    h4 Release Date: #{game.released}
+                    h4 Metacritic: #{(game.metacritic) ? game.metacritic : 'Unreleased'}
+                div.game-description.border-top
+                    p !{game.description}
