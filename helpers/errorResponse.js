@@ -12,16 +12,18 @@ let fail= (code, message, errorCode, errorMessage) => {
     return {
         responseCode: code,
         responseMessage: message,
-        responseContent: {
-            errors: [{
-                errorCode: errorCode,
-                errorMessage: errorMessage
-            }]
-        }
+        responseContent: [{
+            errorCode: errorCode,
+            errorMessage: errorMessage
+        }]
     }
 };
 
+let customResponse = (responseCode, responseMessage, responseContent) => ({responseCode, responseMessage, responseContent});
+
+
 module.exports = {
     success,
-    fail
+    fail,
+    customResponse
 };

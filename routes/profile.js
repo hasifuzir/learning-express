@@ -21,7 +21,8 @@ router.get('/', function(req, res, next) {
       title: profile.userName,
       userName: profile.userName,
       total: favs.length,
-      favArray: favs
+      favArray: favs,
+      wishArray: profile.wishlist
     });
   }
   catch (err){
@@ -32,21 +33,49 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/addWishlist', function (req, res) {
-  let oldProfile = JSON.parse(fs.readFileSync('./public/json/profile.json'));
-  let newWish = req.body.wishName;
-  oldProfile.wishlist.push(newWish);
+  try {
+    let oldProfile = JSON.parse(fs.readFileSync('./public/json/profile.json'));
 
-  let newProfile = JSON.stringify(oldProfile);
-  fs.writeFile('./public/json/profile.json', newProfile, 'utf8', function(err){
-    if(err){
-      throw err;
-    }
-    else{
-      console.log("Success!");
-    }
-  });
+    //Refer to profile.pug
+    let newWish = req.body.wishName;
+    oldProfile.wishlist.push(newWish);
 
-  return res.redirect('/profile');
+    let newProfile = JSON.stringify(oldProfile);
+    fs.writeFile('./public/json/profile.json', newProfile, 'utf8', function(err){
+      if(err){
+        throw err;
+      }
+      else{
+        console.log("Success!");
+      }
+    });
+
+    return res.redirect('/profile');
+  }
+  catch(err) {
+    res.status(400);
+
+    return next(createError(400, err.message));
+  }
+});
+
+router.post('/removeWishlist', function (req, res) {
+  try {
+    let oldProfile = JSON.parse(fs.readFileSync('./public/json/profile.json'));
+
+    //Refer to profile.pug
+    let newWish = req.body.wishName;
+    oldProfile.wishlist.push(newWish);
+
+    console.log(req.body.wishName);
+
+    return res.redirect('/profile');
+  }
+  catch(err) {
+    res.status(400);
+
+    return next(createError(400, err.message));
+  }
 });
 
 module.exports = router;

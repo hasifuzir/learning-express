@@ -1,5 +1,9 @@
 const Joi = require('joi');
 
-const idSchema = Joi.string().alphanum();
+const gameSchema = {
+    params: Joi.object({
+        id: Joi.string().alphanum().required()
+    })
+};
 
-module.exports = {idSchema};
+module.exports = {gameSchema};

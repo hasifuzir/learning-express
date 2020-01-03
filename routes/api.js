@@ -2,12 +2,11 @@ const express = require('express');
 const fs = require('fs');
 //const _ = require('lodash');
 const createError = require('http-errors');
-
-const apiResponse = require('../helpers/apiResponse');
+const apiResponse = require('../helpers/errorResponse');
 const schemas = require('../helpers/schemas');
 
 //Middleware
-const schemaValidator = require('../middleware/SchemaValidator');
+const validator = require('../middleware/validator');
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ const router = express.Router();
 const games = require('../public/json/manifest.json');
 
 //Returns all games and its details as JSON
-router.get('/all', function(req, res, next) {
+router.get('/all', function(req, res) {
   try {
     res.status(200);
 
@@ -46,7 +45,7 @@ router.get('/id_list', function(req, res, next) {
 });
 
 //Return specific game details (based on ID) as JSON
-router.get('/game/:id', schemaValidator.paramsId(schemas.idSchema), (req, res, next) => {
+router.get('/game/:id', validator(schemas.gameSchema), (req, res, next) => {
   try{
     //find iterates through games.items and returns first object corresponding to parameter (TRUE)
     let game = games.items.find(it => it.id === req.params.id);
@@ -69,7 +68,7 @@ router.get('/game/:id', schemaValidator.paramsId(schemas.idSchema), (req, res, n
 });
 
 //Return all games based on specified platform ID as JSON
-router.get('/platform/:id', schemaValidator.paramsId(schemas.idSchema), function(req, res, next) {
+router.get('/platform/:id', validator(schemas.gameSchema), function(req, res, next) {
   try{
     //Explanation goes here
     let gameList = games.items.filter(it => it.platformId.includes(req.params.id));

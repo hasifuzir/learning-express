@@ -6,10 +6,10 @@ const path = require('path'); //to work with file and directory paths
 const logger = require('morgan'); //HTTP request logger middleware
 const fs = require('fs'); //FileSystem module so we can load JSON files
 const Joi = require('joi'); //for data validation
-let bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 //Middleware
-const schemaValidator = require('./middleware/SchemaValidator');
+const schemaValidator = require('./middleware/validator');
 const schemas = require('./helpers/schemas');
 
 

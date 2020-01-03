@@ -30,4 +30,11 @@ block content
                 input#wishName.form-control.mr-sm-2(type='text', placeholder='Type game name' name='wishName')
                 button.btn.btn-primary(type='submit') Submit
 
+        div.wishlist
+            each wish in wishArray
+                div.card
+                    div.card-body
+                        h5 #{wish}
+                        a.btn.btn-primary(formaction='/profile/removeWishlist', type='submit') Remove
+
 
