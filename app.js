@@ -16,6 +16,7 @@ const profileRouter = require('./routes/profile');
 const apiRouter = require('./routes/api');
 const settingsRouter = require('./routes/settings');
 const upcomingRouter = require('./routes/upcoming');
+const releasesRouter = require('./routes/releases');
 
 const app = express(); //create an app object of the Express module
 
@@ -38,6 +39,7 @@ app.use('/profile', profileRouter);
 app.use('/api', apiRouter);
 app.use('/settings', settingsRouter);
 app.use('/upcoming', upcomingRouter);
+app.use('/releases', releasesRouter);
 
 // General route error handling fn(goes at the bottom of stack!)
 // Catches anything that isn't defined by the routers and gives a 404 error, every time user makes request

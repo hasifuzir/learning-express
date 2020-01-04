@@ -15,9 +15,7 @@ const getMonth = (date = null) => {
 };
 
 //Return today's date in the yyyy-mm-dd format string
-const getToday = () => {
-    const date = new Date();
-
+const getDate = (date = new Date()) => {
     const dd = (date.getDate() < 10 ? '0' : '') + date.getDate();
     const mm = (date.getMonth() < 10 ? '0' : '') + ((date.getMonth() === 11 ? date.getMonth() : date.getMonth()+1));
     const yyyy = date.getFullYear();
@@ -38,6 +36,6 @@ const cleanDate = (date = new Date()) => {
 
 module.exports = {
     getMonth,
-    getToday,
+    getDate,
     cleanDate
 };

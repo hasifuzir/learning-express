@@ -58,6 +58,6 @@ block content
                     else
                         h4 Genre: Unknown
                     h4 Release Date: #{dateHelper.cleanDate(game.released)}
-                    h4 Metacritic: #{(game.metacritic) ? game.metacritic : 'Unreleased'}
+                    h4 RAWG Rating: #{(game.rating) ? game.rating : 'No Rating'}
                 div.game-description.border-top
                     p !{game.description}

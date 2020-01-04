@@ -8,11 +8,15 @@ const router = express.Router();
 
 //Function to return a promise
 //Creating function allows us to pass parameters to it, if necessary (not used now)
-const getNewReleases = () => {
+const getReleases = () => {
     try {
         const date = new Date();
 
-        let url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDate() + ',2020-01-31&ordering=released&page_size=40';
+        const dateYearAgo = new Date(date.setFullYear(date.getFullYear() -1 ));
+
+        console.log(dateYearAgo);
+
+        let url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDate(dateYearAgo) + ',' + dateHelper.getDate() + '&ordering=-added&page_size=40';
 
         console.log(url);
 
@@ -38,13 +42,13 @@ router.get('/', function(req, res, next) {
 
         //console.log(cleanDate());
 
-        getNewReleases()
+        getReleases()
             .then((response) => {
                 const releases = response.data.results;
                 const number = releases.length;
 
                 res.status(200);
-                return res.render('upcoming', {
+                return res.render('releases', {
                     title: `${month} releases`,
                     dateHelper: dateHelper,
                     totalNum: number,
@@ -65,7 +69,7 @@ router.get('/', function(req, res, next) {
 });
 
 //TO DO: MOVE THIS TO game.js and differentiate loading game details from JSON vs RAWG api
-router.get('/:slug', function(req, res, next){
+router.get('/:slug', function(req, res, next) {
     try{
         getSpecificGame(req.params.slug)
             .then((response) => {

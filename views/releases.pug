@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    div.hero-image
+        div.hero-text
+            h1 Releases for #{month}
+
+    div.top
+        h2.centered-text Here are #{totalNum} games
+
+    div.library
+        each game in releasesAll
+            div.card
+                div.card-body
+                    h3.card-title #{game.name}
+                div.list.group
+                    div.list-group-item
+                        a #{dateHelper.cleanDate(game.released)}
+                    if (game.genres.length)
+                        div.list-group-item
+                            each genre, index in game.genres
+                                span  #{genre.name} #{(index < game.genres.length - 1) ? ' / ' : ''}
+                    else
+                    div.list-group-item
+                        each platform, index in game.platforms
+                            span  #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
+                    div.list-group-item
+                        a #{game.rating}
+                div.card-body
+                    a.card-link(href = `/releases/${game.slug}`) View Details
+                    
