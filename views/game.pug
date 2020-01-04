@@ -22,20 +22,42 @@ block content
             div.game-info-overlay.card-img-overlay
                 h1.game-info-overlay #{game.name}
                 div.game-details
-                    h4
-                        | Platform:&nbsp;
-                        span
-                        each platform, index in game.platforms
-                            span #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
-                    h4
-                        | Developer:&nbsp;
-                        each dev, index in game.developers
-                            span #{dev.name} #{(index < game.developers.length-1) ? ' / ' : ''}
-                    h4
-                        | Genre:&nbsp;
-                        each genre, index in game.genres
-                            span #{genre.name} #{(index < game.genres.length - 1) ? ' / ' : ''}
-                    h4 Release Date: #{game.released}
+                    if (game.platforms.length > 1) && (game.platforms.length)
+                        h4
+                            | Platforms:&nbsp;
+                            span
+                            each platform, index in game.platforms
+                                span #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
+                    else if (game.platforms.length)
+                        h4
+                            | Platform:&nbsp;
+                            span
+                            each platform, index in game.platforms
+                                span #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
+                    else
+                        h4 Platform: Unknown
+
+                    if (game.developers.length) && (game.developers.length > 1)
+                        h4
+                            | Developers:&nbsp;
+                            each dev, index in game.developers
+                                span #{dev.name} #{(index < game.developers.length-1) ? ' / ' : ''}
+                    else if (game.developers.length)
+                        h4
+                            | Developer:&nbsp;
+                            each dev, index in game.developers
+                                span #{dev.name} #{(index < game.developers.length - 1) ? ' / ' : ''}
+                    else
+                        h4 Developer: Unknown
+
+                    if (game.genres.length)
+                        h4
+                            | Genre:&nbsp;
+                            each genre, index in game.genres
+                                span #{genre.name} #{(index < game.genres.length - 1) ? ' / ' : ''}
+                    else
+                        h4 Genre: Unknown
+                    h4 Release Date: #{dateHelper.cleanDate(game.released)}
                     h4 Metacritic: #{(game.metacritic) ? game.metacritic : 'Unreleased'}
                 div.game-description.border-top
                     p !{game.description}
