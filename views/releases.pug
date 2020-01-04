@@ -5,7 +5,6 @@ block content
         div.hero-text
             h1 Upcoming releases for #{month}
 
-
     div.top
         h2.centered-text Here are the next #{totalNum} games for this month
 
@@ -25,4 +24,4 @@ block content
                             span  #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
                 div.card-body
                     a.card-link(href = `/releases/${game.slug}`) View Details
-
+                    
