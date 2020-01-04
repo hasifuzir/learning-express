@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../WhatGame/.idea/GroceryShopApp.iml" filepath="$PROJECT_DIR$/../WhatGame/.idea/GroceryShopApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/learning-express.iml" filepath="$PROJECT_DIR$/.idea/learning-express.iml" />
     </modules>
   </component>
 </project>
