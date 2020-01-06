@@ -62,12 +62,23 @@ router.post('/addWishlist', function (req, res) {
 router.post('/removeWishlist', function (req, res) {
   try {
     let oldProfile = JSON.parse(fs.readFileSync('./public/json/profile.json'));
+    console.log(req.body.wishName);
 
     //Refer to profile.pug
-    let newWish = req.body.wishName;
-    oldProfile.wishlist.push(newWish);
+    let deleteWish = req.body.wishName;
+    oldProfile.wishlist = oldProfile.wishlist.filter(item => item !== deleteWish);
+    let newProfile = JSON.stringify(oldProfile);
 
-    console.log(req.body.wishName);
+    fs.writeFile('./public/json/profile.json', newProfile, 'utf8', function(err){
+      if(err){
+        throw err;
+      }
+      else{
+        console.log("Success!");
+      }
+    });
+
+
 
     return res.redirect('/profile');
   }
@@ -77,5 +88,34 @@ router.post('/removeWishlist', function (req, res) {
     return next(createError(400, err.message));
   }
 });
+
+router.post('/removeWishlist', function (req, res) {
+  try {
+    let oldProfile = JSON.parse(fs.readFileSync('./public/json/profile.json'));
+    console.log(req.body.wishName);
+
+    //Refer to profile.pug
+    let deleteWish = req.body.wishName;
+    oldProfile.wishlist = oldProfile.wishlist.filter(item => item !== deleteWish);
+    let newProfile = JSON.stringify(oldProfile);
+
+    fs.writeFile('./public/json/profile.json', newProfile, 'utf8', function(err){
+      if(err){
+        throw err;
+      }
+      else{
+        console.log("Success!");
+      }
+    });
+
+    return res.redirect('/profile');
+  }
+  catch(err) {
+    res.status(400);
+
+    return next(createError(400, err.message));
+  }
+});
+
 
 module.exports = router;

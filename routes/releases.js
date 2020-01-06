@@ -3,6 +3,10 @@ const createError = require('http-errors');
 const axios = require('axios');
 
 const dateHelper = require('../helpers/dateHelper');
+const schemas = require('../helpers/schemas');
+
+//Middleware
+const validator = require('../middleware/validator');
 
 const router = express.Router();
 
@@ -14,13 +18,11 @@ const getReleases = () => {
 
         const dateYearAgo = new Date(date.setFullYear(date.getFullYear() -1 ));
 
-        console.log(dateYearAgo);
-
         let url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDate(dateYearAgo) + ',' + dateHelper.getDate() + '&ordering=-added&page_size=40';
 
         console.log(url);
 
-        return axios.get(url)
+        return axios.get(url).then(response => {return response.data})
     } catch(err) {
 
     }
@@ -60,6 +62,57 @@ router.get('/', function(req, res, next) {
             .catch((err) => {
                 console.log('Error!');
             });
+    }
+    catch (err){
+        res.status(400);
+
+        return next(createError(400, err.message));
+    }
+});
+
+//Custom
+router.get('/list', validator(schemas.releasesSchema), async (req, res, next) => {
+    try {
+        let rating = req.query.rating;
+        let platform = req.query.platform;
+
+        console.log(rating);
+        console.log(platform);
+
+        let list = await getReleases();
+        let oldGames = list.results;
+
+        let filteredRating= null;
+        let filteredPlatform = null;
+
+        if (rating != null){
+            oldGames = oldGames.filter(it => (it.rating <= rating));
+        }
+        if (platform != null) {
+            //filteredPlatform = oldGames.filter(it => it.platforms.every(c => c.platform.slug.includes(platform) === platform));
+            //filteredPlatform = oldGames.filter(it => it.platforms.forEach(it2 => {it2.platform.id.includes(platform)}));
+            //filteredPlatform = oldGames.filter(it => it.platforms.forEach(it2 => it2.platform.slug.includes(platform)));
+            oldGames = oldGames.filter(it => it.platforms.some(it2 => it2.platform.slug === platform));
+        }
+
+        console.log(oldGames);
+
+
+        const number = oldGames.length;
+
+
+
+
+
+
+
+        res.status(200);
+        return res.render('releases', {
+            title: `Releases`,
+            dateHelper: dateHelper,
+            totalNum: number,
+            releasesAll: oldGames
+        });
     }
     catch (err){
         res.status(400);
