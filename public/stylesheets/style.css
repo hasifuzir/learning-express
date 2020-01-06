@@ -24,11 +24,9 @@ h2 {
 }
 
 body {
-  margin: 0;
-  padding: 0;
   font-family: var(--core-font);
   -webkit-font-smoothing: antialiased;
-  background-color: #f0f0f0;
+  background-color: #f5f5f5;
 }
 
 img {
@@ -38,6 +36,16 @@ img {
 
 img:hover {
   opacity: 0.8;
+}
+
+.card-1:hover img{
+  filter: brightness(60%);
+  opacity: 0.8;
+}
+
+.card-img-top-custom {
+  height: 150px;
+  filter: brightness(50%) blur(1px);
 }
 
 .btn {
@@ -65,10 +73,6 @@ img:hover {
   text-align: center;
 }
 
-.centered-text {
-  text-align: center;
-}
-
 .library {
   display: flex;
   flex-flow: wrap;
@@ -90,8 +94,10 @@ img:hover {
   align-self: center;
 }
 
-.game-image {
-  padding: 5px;
+.card-img-top-small {
+  align-self: center;
+  width: 150px;
+  height: auto;
 }
 
 .card-title {
@@ -103,7 +109,7 @@ img:hover {
   text-align: center;
 }
 
-.game-profile {
+.game-info{
   padding: 10px;
 }
 
@@ -112,7 +118,7 @@ img:hover {
 }
 
 .game-image {
-  filter: brightness(30%);
+  filter: brightness(30%) blur(1px);
   max-width: 100%;
   height: auto;
 }

@@ -1,0 +1,78 @@
+extends layout
+
+block content
+    div.top.border
+        h1.text-center Releases
+        if (filter)
+            h4.text-center #{totalNum} games found
+        else
+            h4.text-center The #{adjective} #{totalNum} games
+
+    form(method='GET', action='/releases/filter')
+        div.form-group.form-row.justify-content-center.align-items-center.w-75
+            div.col
+                div
+                    a Platform(s):
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'all', id = 'all', name = 'platform')
+                    label.form-check-label(for='all') All platforms
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'pc', id = 'pc', name = 'platform')
+                    label.form-check-label(for='pc') PC
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'playstation4', id = 'ps4', name = 'platform')
+                    label.form-check-label(for='pc') PS4
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'xbox-one', id = 'xb1', name = 'platform')
+                    label.form-check-label(for='xb1') Xbox One
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'nintendo-switch', id = 'ns', name = 'platform')
+                    label.form-check-label(for='ns') Nintendo Switch
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'macos', id = 'macos', name = 'platform')
+                    label.form-check-label(for='macos') MacOS
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'linux', id = 'linux', name = 'platform')
+                    label.form-check-label(for='linux') Linux
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'ios', id = 'ios', name = 'platform')
+                    label.form-check-label(for='ios') iOS
+                div.form-check.form-check-inline
+                    input.form-check-input(type='checkbox', value = 'android', id = 'android', name = 'platform')
+                    label.form-check-label(for='android') Android
+            div.col-2
+                div.form-group
+                    label(for = 'ratingSel') Min rating:
+                    select.form-control(id='ratingSel', name = 'min_rating')
+                        option(value='0') 0
+                        option(value='1') 1
+                        option(value='2') 2
+                        option(value='3') 3
+                        option(value='4') 4
+                        option(value='5') 5
+            div.col
+                button.btn.btn-primary(type='submit') Submit
+
+    div.library
+        each game in releasesAll
+            div.card
+                div.card-1
+                    img.card-img-top.card-img-top-custom(src= `${game.background_image}`)
+                    div.card-img-overlay
+                        h2
+                        h2.card-title.text-white.text-center #{game.name}
+                div.list.group
+                    div.list-group-item
+                        a #{dateHelper.cleanDate(game.released)}
+                    if (game.genres.length)
+                        div.list-group-item
+                            each genre, index in game.genres
+                                span  #{genre.name} #{(index < game.genres.length - 1) ? ' / ' : ''}
+                    else
+                    div.list-group-item
+                        each platform, index in game.platforms
+                            span  #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
+                    div.list-group-item
+                        a #{game.rating}
+                    div.list-group-item.text-center
+                        a.card-link(href = `/releases/${game.slug}`) View Details

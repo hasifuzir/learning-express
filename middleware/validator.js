@@ -8,10 +8,6 @@ const returnError = (res, errors) => {
     const errs = [];
     errors.forEach((err) => {
         const {details} = err;
-        details2 = Object.values(details);
-        console.log(details2);
-        console.log(details);
-
 
         const message = details.map(i => i.message).join(',');
         errs.push(createError('VALIDATION_ERROR', message));
@@ -26,7 +22,11 @@ const validator = (schema) => (req, res, next) => {
 
     Object.keys(schema).forEach((key) => {
         if (key === 'query') {
-            //Do something for queries
+            const {error} = Joi.validate(req.query, schema[key], {abortEarly: false});
+
+            if (error) {
+                errors.push(error);
+            }
         }
 
         if (key === 'params') {

@@ -1,18 +1,18 @@
 extends layout
 
 block content
-    div.hero-image
-        div.hero-text
-            h1 Upcoming releases for #{month}
-
-    div.top
-        h2.centered-text Here are the next #{totalNum} games for this month
+    div.top.border
+        h1.text-center Upcoming releases for #{month}
+        h4.text-center The next #{totalNum} games for this #{month}
 
     div.library
         each game in releasesAll
             div.card
-                div.card-body
-                    h3.card-title #{game.name}
+                div.card-1
+                    img.card-img-top.card-img-top-custom(src= `${game.background_image}`)
+                    div.card-img-overlay
+                        h2
+                        h2.card-title.text-white.text-center #{game.name}
                 div.list.group
                     div.list-group-item
                         a #{dateHelper.cleanDate(game.released)}
@@ -24,6 +24,6 @@ block content
                     div.list-group-item
                         each platform, index in game.platforms
                             span  #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
-                div.card-body
-                    a.card-link(href = `/upcoming/${game.slug}`) View Details
+                    div.list-group-item.text-center
+                        a.card-link(href = `/releases/${game.slug}`) View Details
                     
