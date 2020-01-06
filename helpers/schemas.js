@@ -10,7 +10,7 @@ const gameSchema = {
 
 const releasesSchema = {
     query: Joi.object({
-        rating: Joi.number().integer().min(0).max(5),
+        min_rating: Joi.number().integer().min(0).max(5),
         platform: Joi.array().items(Joi.string().alphanum().valid(platforms))
     })
 };

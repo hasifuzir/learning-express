@@ -3,7 +3,10 @@ extends layout
 block content
     div.top.border
         h1.text-center Releases
-        h4.text-center The top #{totalNum} games of the last 12 months
+        if (filter)
+            h4.text-center #{totalNum} games found
+        else
+            h4.text-center The #{adjective} #{totalNum} games
 
     div.form-group.form-row.justify-content-center.w-50
         div.col-auto

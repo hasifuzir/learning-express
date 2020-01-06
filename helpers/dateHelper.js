@@ -15,13 +15,20 @@ const getMonth = (date = null) => {
 };
 
 //Return today's date in the yyyy-mm-dd format string
-const getDate = (date = new Date()) => {
+const getDateNoTime = (date = new Date()) => {
     const dd = (date.getDate() < 10 ? '0' : '') + date.getDate();
     const mm = (date.getMonth() < 10 ? '0' : '') + ((date.getMonth() === 11 ? date.getMonth() : date.getMonth()+1));
     const yyyy = date.getFullYear();
 
     return (yyyy + '-' + mm + '-' + dd);
 };
+
+//Return date minus a year ago
+//Params: date , defaults to today's date
+const dateYearAgo = (date = new Date()) => {
+    return new Date(date.setFullYear(date.getFullYear() -1 ));
+};
+
 
 //Return given date as a prettied string XX MONTH XXX format
 const cleanDate = (date = new Date()) => {
@@ -36,6 +43,7 @@ const cleanDate = (date = new Date()) => {
 
 module.exports = {
     getMonth,
-    getDate,
-    cleanDate
+    getDateNoTime,
+    cleanDate,
+    dateYearAgo
 };

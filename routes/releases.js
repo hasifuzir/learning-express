@@ -2,6 +2,7 @@ const express = require('express');
 const createError = require('http-errors');
 const axios = require('axios');
 
+//Helpers
 const dateHelper = require('../helpers/dateHelper');
 const schemas = require('../helpers/schemas');
 
@@ -9,28 +10,34 @@ const schemas = require('../helpers/schemas');
 const validator = require('../middleware/validator');
 const stringToArray = require('../middleware/stringToArray');
 
+//Create a router
 const router = express.Router();
 
-//Function to return a promise
-//Creating function allows us to pass parameters to it, if necessary (not used now)
-const getReleases = () => {
+//=====================================================================================================================
+//Functions
+//=====================================================================================================================
+//Returns a RAWG list of games (max 40 games) from the past 12 months ordered by user parameter, defaults to popularity on RAWG website
+/* Parameters: ordering , order of request to RAWG
+    -added , most popular games on RAWG (how many users added it to their lists)
+ */
+const getReleasesPastYear = (ordering = '-added') => {
     try {
-        const date = new Date();
-        const dateYearAgo = new Date(date.setFullYear(date.getFullYear() -1 ));
-
-        const url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDate(dateYearAgo) + ',' + dateHelper.getDate() + '&ordering=-added&page_size=40';
+        const url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDateNoTime(dateHelper.dateYearAgo()) + ',' + dateHelper.getDateNoTime() + '&ordering=' + ordering + '&page_size=40';
 
         console.log(url);
+
 
         return axios.get(url)
             .then(response => {
                     return response.data;
                 })
     } catch(err) {
-        console.log('Error!');
+        throw new Error(err.message);
     }
 };
 
+//Returns details of a specific game from RAWG based on game slug as user parameter
+//Parameter: slug , game slug as per RAWG
 const getSpecificGame = (slug) => {
     try{
         const url = 'https://api.rawg.io/api/games/' + slug;
@@ -43,30 +50,34 @@ const getSpecificGame = (slug) => {
             })
     }
     catch(err){
-        console.log('Error!');
+        throw new Error(err.message);
     }
 };
 
-//Load data from RAWG and render page with all upcoming releases for the month
+//=====================================================================================================================
+//Routes
+//=====================================================================================================================
+//Load data from RAWG and render page of past year's games using getReleasesPastYear()
 router.get('/', async (req, res, next) => {
     try {
-        const month = dateHelper.getMonth();
 
-        const response = await getReleases();
+        const response = await getReleasesPastYear();
         const releases = response.results;
         const number = releases.length;
 
+
         res.status(200);
         return res.render('releases', {
-            title: `${month} releases`,
+            title: `Releases`,
             dateHelper: dateHelper,
             totalNum: number,
-            month: month,
-            releasesAll: releases
+            releasesAll: releases,
+            adjective: 'top'
         });
     }
     catch (err){
         res.status(400);
+
         return next(createError(400, err.message));
     }
 });
@@ -74,14 +85,14 @@ router.get('/', async (req, res, next) => {
 //Custom
 router.get('/filter', stringToArray(), validator(schemas.releasesSchema), async (req, res, next) => {
     try {
-        let rating = req.query.rating;
+        let minRating = req.query.min_rating;
         let platform = req.query.platform;
 
-        let list = await getReleases();
+        let list = await getReleasesPastYear();
         let gameList = list.results;
 
-        if (rating != null){
-            gameList = gameList.filter(it => (it.rating >= rating));
+        if (minRating != null){
+            gameList = gameList.filter(it => (it.rating >= minRating));
         }
         if (platform != null) {
             //Filters based on a SINGLE value
@@ -100,7 +111,8 @@ router.get('/filter', stringToArray(), validator(schemas.releasesSchema), async 
             title: `Releases`,
             dateHelper: dateHelper,
             totalNum: number,
-            releasesAll: gameList
+            releasesAll: gameList,
+            filter: true
         });
     }
     catch (err){
@@ -115,12 +127,15 @@ router.get('/:slug', async (req, res, next) => {
     try{
         const response = await getSpecificGame(req.params.slug);
 
+
+
+
         res.status(200);
         return res.render('game', {
             title: response.name,
             dateHelper: dateHelper,
             apiGame: true,
-            game: response
+            game: response,
         });
     }
     catch(err) {

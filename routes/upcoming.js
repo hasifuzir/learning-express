@@ -6,56 +6,63 @@ const dateHelper = require('../helpers/dateHelper');
 
 const router = express.Router();
 
-//Function to return a promise
-//Creating function allows us to pass parameters to it, if necessary (not used now)
-const getNewReleases = () => {
+//=====================================================================================================================
+//Functions
+//=====================================================================================================================
+//Returns a RAWG list of games (max 40 games) from the past 12 months ordered by user parameter, defaults to popularity on RAWG website
+/* Parameters: ordering , order of request to RAWG
+    -added , most popular games on RAWG (how many users added it to their lists)
+ */
+const getReleasesPastYear = (ordering = 'released') => {
     try {
-        const date = new Date();
+        const url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDateNoTime(dateHelper.dateYearAgo()) + ',' + dateHelper.getDateNoTime() + '&ordering=' + ordering + '&page_size=40';
 
-        let url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDate() + ',2020-01-31&ordering=released&page_size=40';
+        console.log(url);
+
+
+        return axios.get(url)
+            .then(response => {
+                return response.data;
+            })
+    } catch(err) {
+        throw new Error(err.message);
+    }
+};
+
+//Returns details of a specific game from RAWG based on game slug as user parameter
+//Parameter: slug , game slug as per RAWG
+const getSpecificGame = (slug) => {
+    try{
+        const url = 'https://api.rawg.io/api/games/' + slug;
 
         console.log(url);
 
         return axios.get(url)
-    } catch(err) {
-
-    }
-};
-
-const getSpecificGame = (slug) => {
-    try{
-        return axios.get('https://api.rawg.io/api/games/' + slug)
+            .then(response => {
+                return response.data;
+            })
     }
     catch(err){
-
+        throw new Error(err.message);
     }
 };
 
 //Load data from RAWG and render page with all upcoming releases for the month
-router.get('/', function(req, res, next) {
+router.get('/', async (req, res, next) => {
     try {
         const month = dateHelper.getMonth();
+        const response = await getReleasesPastYear();
+        const releases = response.results;
+        const number = releases.length;
 
-        //console.log(cleanDate());
-
-        getNewReleases()
-            .then((response) => {
-                const releases = response.data.results;
-                const number = releases.length;
-
-                res.status(200);
-                return res.render('upcoming', {
-                    title: `${month} releases`,
-                    dateHelper: dateHelper,
-                    totalNum: number,
-                    month: month,
-                    releasesAll: releases
-                });
-
-            })
-            .catch((err) => {
-                console.log('Error!');
-            });
+        res.status(200);
+        return res.render('upcoming', {
+            title: `${month} releases`,
+            dateHelper: dateHelper,
+            totalNum: number,
+            month: month,
+            releasesAll: releases
+        });
     }
     catch (err){
         res.status(400);
