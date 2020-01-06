@@ -7,6 +7,7 @@ const schemas = require('../helpers/schemas');
 
 //Middleware
 const validator = require('../middleware/validator');
+const stringToArray = require('../middleware/stringToArray');
 
 const router = express.Router();
 
@@ -15,103 +16,91 @@ const router = express.Router();
 const getReleases = () => {
     try {
         const date = new Date();
-
         const dateYearAgo = new Date(date.setFullYear(date.getFullYear() -1 ));
 
-        let url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDate(dateYearAgo) + ',' + dateHelper.getDate() + '&ordering=-added&page_size=40';
+        const url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDate(dateYearAgo) + ',' + dateHelper.getDate() + '&ordering=-added&page_size=40';
 
         console.log(url);
 
-        return axios.get(url).then(response => {return response.data})
+        return axios.get(url)
+            .then(response => {
+                    return response.data;
+                })
     } catch(err) {
-
+        console.log('Error!');
     }
 };
 
 const getSpecificGame = (slug) => {
     try{
-        return axios.get('https://api.rawg.io/api/games/' + slug)
+        const url = 'https://api.rawg.io/api/games/' + slug;
+
+        console.log(url);
+
+        return axios.get(url)
+            .then(response => {
+                return response.data;
+            })
     }
     catch(err){
-
+        console.log('Error!');
     }
 };
 
 //Load data from RAWG and render page with all upcoming releases for the month
-router.get('/', function(req, res, next) {
+router.get('/', async (req, res, next) => {
     try {
         const month = dateHelper.getMonth();
 
-        //console.log(cleanDate());
+        const response = await getReleases();
+        const releases = response.results;
+        const number = releases.length;
 
-        getReleases()
-            .then((response) => {
-                const releases = response.data.results;
-                const number = releases.length;
-
-                res.status(200);
-                return res.render('releases', {
-                    title: `${month} releases`,
-                    dateHelper: dateHelper,
-                    totalNum: number,
-                    month: month,
-                    releasesAll: releases
-                });
-
-            })
-            .catch((err) => {
-                console.log('Error!');
-            });
+        res.status(200);
+        return res.render('releases', {
+            title: `${month} releases`,
+            dateHelper: dateHelper,
+            totalNum: number,
+            month: month,
+            releasesAll: releases
+        });
     }
     catch (err){
         res.status(400);
-
         return next(createError(400, err.message));
     }
 });
 
 //Custom
-router.get('/list', validator(schemas.releasesSchema), async (req, res, next) => {
+router.get('/filter', stringToArray(), validator(schemas.releasesSchema), async (req, res, next) => {
     try {
         let rating = req.query.rating;
         let platform = req.query.platform;
 
-        console.log(rating);
-        console.log(platform);
-
         let list = await getReleases();
-        let oldGames = list.results;
-
-        let filteredRating= null;
-        let filteredPlatform = null;
+        let gameList = list.results;
 
         if (rating != null){
-            oldGames = oldGames.filter(it => (it.rating <= rating));
+            gameList = gameList.filter(it => (it.rating >= rating));
         }
         if (platform != null) {
-            //filteredPlatform = oldGames.filter(it => it.platforms.every(c => c.platform.slug.includes(platform) === platform));
-            //filteredPlatform = oldGames.filter(it => it.platforms.forEach(it2 => {it2.platform.id.includes(platform)}));
-            //filteredPlatform = oldGames.filter(it => it.platforms.forEach(it2 => it2.platform.slug.includes(platform)));
-            oldGames = oldGames.filter(it => it.platforms.some(it2 => it2.platform.slug === platform));
+            //Filters based on a SINGLE value
+            //gameList = gameList.filter(it => it.platforms.some(it2 => it2.platform.slug === platform));
+            gameList = gameList.filter(it => platform.every(it2 => it.platforms.some(it3 => it3.platform.slug === it2)));
+            //Filters if include ANY
+            //gameList = gameList.filter(it => it.platforms.every(it2 => platform.includes(it2.platform.slug)));
+
+            //let favs = gameList.items.filter(it => profile.favs.includes(it.id));
         }
 
-        console.log(oldGames);
-
-
-        const number = oldGames.length;
-
-
-
-
-
-
+        const number = gameList.length;
 
         res.status(200);
         return res.render('releases', {
             title: `Releases`,
             dateHelper: dateHelper,
             totalNum: number,
-            releasesAll: oldGames
+            releasesAll: gameList
         });
     }
     catch (err){
@@ -122,24 +111,17 @@ router.get('/list', validator(schemas.releasesSchema), async (req, res, next) =>
 });
 
 //TO DO: MOVE THIS TO game.js and differentiate loading game details from JSON vs RAWG api
-router.get('/:slug', function(req, res, next) {
+router.get('/:slug', async (req, res, next) => {
     try{
-        getSpecificGame(req.params.slug)
-            .then((response) => {
-                //console.log(response.data);
-                const gameDetails = response.data;
+        const response = await getSpecificGame(req.params.slug);
 
-                res.status(200);
-                return res.render('game', {
-                    title: gameDetails.name,
-                    dateHelper: dateHelper,
-                    apiGame: true,
-                    game: gameDetails
-                });
-            })
-            .catch((err) => {
-                console.log('Error!');
-            });
+        res.status(200);
+        return res.render('game', {
+            title: response.name,
+            dateHelper: dateHelper,
+            apiGame: true,
+            game: response
+        });
     }
     catch(err) {
         res.status(400);

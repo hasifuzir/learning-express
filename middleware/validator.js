@@ -8,10 +8,6 @@ const returnError = (res, errors) => {
     const errs = [];
     errors.forEach((err) => {
         const {details} = err;
-        details2 = Object.values(details);
-        console.log(details2);
-        console.log(details);
-
 
         const message = details.map(i => i.message).join(',');
         errs.push(createError('VALIDATION_ERROR', message));

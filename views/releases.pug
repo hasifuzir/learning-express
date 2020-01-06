@@ -1,17 +1,31 @@
 extends layout
 
 block content
-    div.hero-image
-        div.hero-text
+    div.top.border
+        h1.text-center Releases
+        h4.text-center The top #{totalNum} games of the last 12 months
 
-    div.top
-        h2.centered-text Here are #{totalNum} games
+    div.form-group.form-row.justify-content-center.w-50
+        div.col-auto
+            label(for = 'platformSel') Platform:
+            select.form-control(id='platformSel')
+                option(value='all') All platforms
+                option(value='pc') PC
+        div.col-auto
+            label(for = 'ratingSel') Rating:
+            select.form-control(id='ratingSel')
+                option(value='5') 5
+                option(value='4') 4
+
 
     div.library
         each game in releasesAll
             div.card
-                div.card-body
-                    h3.card-title #{game.name}
+                div.card-1
+                    img.card-img-top.card-img-top-custom(src= `${game.background_image}`)
+                    div.card-img-overlay
+                        h2
+                        h2.card-title.text-white.text-center #{game.name}
                 div.list.group
                     div.list-group-item
                         a #{dateHelper.cleanDate(game.released)}
@@ -25,6 +39,5 @@ block content
                             span  #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
                     div.list-group-item
                         a #{game.rating}
-                div.card-body
-                    a.card-link(href = `/releases/${game.slug}`) View Details
-                    
+                    div.list-group-item.text-center
+                        a.card-link(href = `/releases/${game.slug}`) View Details

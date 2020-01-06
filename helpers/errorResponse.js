@@ -19,7 +19,11 @@ let fail= (code, message, errorCode, errorMessage) => {
     }
 };
 
-let customResponse = (responseCode, responseMessage, responseContent) => ({responseCode, responseMessage, responseContent});
+let customResponse = (responseCode, responseMessage, responseContent) => ({
+    responseCode,
+    responseMessage,
+    responseContent
+});
 
 
 module.exports = {
