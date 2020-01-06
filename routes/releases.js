@@ -60,7 +60,6 @@ const getSpecificGame = (slug) => {
 //Load data from RAWG and render page of past year's games using getReleasesPastYear()
 router.get('/', async (req, res, next) => {
     try {
-
         const response = await getReleasesPastYear();
         const releases = response.results;
         const number = releases.length;
@@ -72,7 +71,8 @@ router.get('/', async (req, res, next) => {
             dateHelper: dateHelper,
             totalNum: number,
             releasesAll: releases,
-            adjective: 'top'
+            adjective: 'top',
+            rating: '0'
         });
     }
     catch (err){
@@ -83,8 +83,10 @@ router.get('/', async (req, res, next) => {
 });
 
 //Custom
-router.get('/filter', stringToArray(), validator(schemas.releasesSchema), async (req, res, next) => {
+router.get('/filter', validator(schemas.releasesSchema), async (req, res, next) => {
     try {
+        console.log(req.query);
+
         let minRating = req.query.min_rating;
         let platform = req.query.platform;
 
@@ -95,13 +97,25 @@ router.get('/filter', stringToArray(), validator(schemas.releasesSchema), async 
             gameList = gameList.filter(it => (it.rating >= minRating));
         }
         if (platform != null) {
-            //Filters based on a SINGLE value
-            //gameList = gameList.filter(it => it.platforms.some(it2 => it2.platform.slug === platform));
-            gameList = gameList.filter(it => platform.every(it2 => it.platforms.some(it3 => it3.platform.slug === it2)));
+            console.log(platform);
+
+            if (Array.isArray(platform)) {
+                if (platform.some(it => it === 'all')){
+
+                }
+                else{
+                    gameList = gameList.filter(it => platform.every(it2 => it.platforms.some(it3 => it3.platform.slug === it2)));
+                }
+            }
+            else if (platform === 'all'){
+
+            }
+            else {
+                //Filters based on a SINGLE value
+                gameList = gameList.filter(it => it.platforms.some(it2 => it2.platform.slug === platform));
+            }
             //Filters if include ANY
             //gameList = gameList.filter(it => it.platforms.every(it2 => platform.includes(it2.platform.slug)));
-
-            //let favs = gameList.items.filter(it => profile.favs.includes(it.id));
         }
 
         const number = gameList.length;

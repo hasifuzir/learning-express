@@ -94,6 +94,12 @@ img:hover {
   align-self: center;
 }
 
+.card-img-top-small {
+  align-self: center;
+  width: 150px;
+  height: auto;
+}
+
 .card-title {
   font-size: 20px;
   color: black;

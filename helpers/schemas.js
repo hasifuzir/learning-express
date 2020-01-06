@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-platforms = ['pc', 'playstation4', 'xbox-one', 'macos', 'nintendo-switch', 'ios', 'android', 'linux'];
+platforms = ['pc', 'playstation4', 'xbox-one', 'macos', 'nintendo-switch', 'ios', 'android', 'linux', 'all'];
 
 const gameSchema = {
     params: Joi.object({
@@ -11,7 +11,7 @@ const gameSchema = {
 const releasesSchema = {
     query: Joi.object({
         min_rating: Joi.number().integer().min(0).max(5),
-        platform: Joi.array().items(Joi.string().alphanum().valid(platforms))
+        platform: Joi.array().single().items(Joi.string().alphanum().valid(platforms))
     })
 };
 
