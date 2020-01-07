@@ -8,13 +8,14 @@ const schemas = require('../helpers/schemas');
 //Middleware
 const validator = require('../middleware/validator');
 
+//Create router
 const router = express.Router();
 
 //Load the manifest JSON file
 const games = require('../public/json/manifest.json');
 
 //Returns all games and its details as JSON
-router.get('/all', function(req, res) {
+router.get('/local/all', function(req, res) {
   try {
     res.status(200);
 
@@ -29,7 +30,7 @@ router.get('/all', function(req, res) {
 });
 
 //Return list of IDs as JSON
-router.get('/id_list', function(req, res, next) {
+router.get('/local/id_list', function(req, res, next) {
   try{
     //map() iterates through games.items array and returns an object array of corresponding key 'id'
     let gameIds = games.items.map(game => game.id);
@@ -45,7 +46,7 @@ router.get('/id_list', function(req, res, next) {
 });
 
 //Return specific game details (based on ID) as JSON
-router.get('/game/:id', validator(schemas.gameSchema), (req, res, next) => {
+router.get('/local/:id', validator(schemas.gameSchema), (req, res, next) => {
   try{
     //find iterates through games.items and returns first object corresponding to parameter (TRUE)
     let game = games.items.find(it => it.id === req.params.id);
@@ -68,7 +69,7 @@ router.get('/game/:id', validator(schemas.gameSchema), (req, res, next) => {
 });
 
 //Return all games based on specified platform ID as JSON
-router.get('/platform/:id', validator(schemas.gameSchema), function(req, res, next) {
+router.get('/local/platform/:id', validator(schemas.gameSchema), function(req, res, next) {
   try{
     //Explanation goes here
     let gameList = games.items.filter(it => it.platformId.includes(req.params.id));
@@ -210,19 +211,5 @@ router.delete('/profile/wishlist/:index', validator(schemas.indexSchema), (req, 
     return res.json(errorResponse.fail(400, 'BAD_REQUEST', 'INDEX_ERROR', err.message));
   }
 });
-
-
-//Return all games based on specified platform ID as JSON
-//Uses lodash, but you can also use filter() + inludes() instead!
-/*
-router.get('/platform/:id', function(req, res) {
-  let gameList = _.filter(games.items, {"platformId" : [req.params.id]});
-
-  return res.json(gameList);
-});
- */
-
-
-
 
 module.exports = router;
