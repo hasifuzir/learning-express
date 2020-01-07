@@ -60,7 +60,7 @@ router.post('/addWishlist', function (req, res) {
   }
 });
 
-router.post('/removeWishlist', function (req, res) {
+router.put('/removeWishlist', function (req, res) {
   try {
     let oldProfile = JSON.parse(fs.readFileSync('./public/json/profile.json'));
     console.log(req.body);

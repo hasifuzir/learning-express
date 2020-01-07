@@ -36,6 +36,14 @@ const validator = (schema) => (req, res, next) => {
                 errors.push(error);
             }
         }
+
+        if (key === 'body') {
+            const {error} = Joi.validate(req.body, schema[key], {abortEarly: false});
+
+            if (error) {
+                errors.push(error);
+            }
+        }
     });
 
     if (errors.length) {

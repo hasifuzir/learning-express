@@ -15,7 +15,21 @@ const releasesSchema = {
     })
 };
 
+const wishListSchema = {
+    body: Joi.object({
+        wishName: Joi.string().required()
+    })
+};
+
+const indexSchema = {
+    params: Joi.object({
+        index: Joi.number().integer().min(0).required()
+    })
+};
+
 module.exports = {
     gameSchema,
-    releasesSchema
+    releasesSchema,
+    wishListSchema,
+    indexSchema
 };
