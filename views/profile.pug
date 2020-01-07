@@ -38,7 +38,7 @@ block content
                 div.card
                     div.card-body
                         h5 #{wish}
-                        form(action='/profile/removeWishlist', method='POST')
+                        form(action='/profile/removeWishlist', method='PUT')
                             input(type='hidden', name='wishName', value = wish)
                             button.btn.btn-primary(type='submit') Remove
 
