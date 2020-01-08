@@ -63,7 +63,7 @@ block content
                         h2.card-title.text-white.text-center #{game.name}
                 div.list.group
                     div.list-group-item
-                        a #{dateHelper.cleanDate(game.released)}
+                        a #{date.cleanDate(game.released)}
                     if (game.genres.length)
                         div.list-group-item
                             each genre, index in game.genres
