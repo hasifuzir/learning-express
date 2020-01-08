@@ -2,8 +2,8 @@ extends layout
 
 block content
     if !apiGame
-      div.game-profile.card
-          div.game-image
+      div.card
+          div
               img(src=`/images/${game.imgSrc}`, alt = `${game.name} Image`)
           div.game-info
               h1.game-name.border-top.border-bottom #{game.name}
@@ -17,7 +17,7 @@ block content
               p #{game.description}
 
     else if apiGame
-        div.game-profile.card
+        div.card
             img.card-img.game-image(src=`${game.background_image}`, alt = `${game.name} Image`)
             div.game-info-overlay.card-img-overlay
                 h1.game-info-overlay #{game.name}
