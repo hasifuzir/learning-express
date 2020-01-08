@@ -1,11 +1,13 @@
+//Modules
 const express = require('express');
+
+//Create router
 const router = express.Router();
 
+//Controller
+const settingsController = require('../controllers/settingsController');
+
 //Render the About page
-router.get('/', function(req, res) {
-  return res.render('settings', {
-    title: 'Settings'
-  });
-});
+router.get('/', settingsController.displaySettings);
 
 module.exports = router;
