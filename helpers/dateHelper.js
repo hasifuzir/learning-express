@@ -26,9 +26,12 @@ const getDateNoTime = (date = new Date()) => {
 //Return date minus a year ago
 //Params: date , defaults to today's date
 const dateYearAgo = (date = new Date()) => {
-    return new Date(date.setFullYear(date.getFullYear() -1 ));
+    return new Date(date.setFullYear(date.getFullYear() - 1 ));
 };
 
+const dateEndOfMonth = (date = new Date()) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+};
 
 //Return given date as a prettied string XX MONTH XXX format
 const cleanDate = (date = new Date()) => {
@@ -45,5 +48,6 @@ module.exports = {
     getMonth,
     getDateNoTime,
     cleanDate,
-    dateYearAgo
+    dateYearAgo,
+    dateEndOfMonth
 };

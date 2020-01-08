@@ -3,7 +3,7 @@ extends layout
 block content
     div.top.border
         h1.text-center Upcoming releases for #{month}
-        h4.text-center The next #{totalNum} games for this #{month}
+        h4.text-center The top #{totalNum} upcoming games for #{month}
 
     div.library
         each game in releasesAll
@@ -15,15 +15,18 @@ block content
                         h2.card-title.text-white.text-center #{game.name}
                 div.list.group
                     div.list-group-item
-                        a #{dateHelper.cleanDate(game.released)}
-                    if (game.genres.length)
+                        a #{date.cleanDate(game.released)}
+                    if (game.genres !== null && game.genres.length >= 1)
                         div.list-group-item
                             each genre, index in game.genres
                                 span  #{genre.name} #{(index < game.genres.length - 1) ? ' / ' : ''}
                     else
-                    div.list-group-item
-                        each platform, index in game.platforms
-                            span  #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
+
+                    if (game.platforms !== null && game.platforms.length >= 1)
+                        div.list-group-item
+                            each platform, index in game.platforms
+                                span  #{platform.platform.name} #{(index < game.platforms.length - 1) ? ' / ' : ''}
+                    else
                     div.list-group-item.text-center
                         a.card-link(href = `/releases/${game.slug}`) View Details
                     

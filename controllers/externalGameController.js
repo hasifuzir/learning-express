@@ -7,10 +7,10 @@ const externalGames = require('../models/externalGames');
 //Helpers
 const dateHelper = require('../helpers/dateHelper');
 
-//Load data from RAWG and render page of past year's games using getReleasesPastYear()
+//Load data from RAWG and render page of past year's games using getReleases()
 exports.displayReleases = async (req, res, next) => {
   try {
-    const response = await externalGames.getReleasesPastYear();
+    const response = await externalGames.getReleases(range = 'past_year');
     const releases = response.results;
     const number = releases.length;
 
@@ -37,7 +37,7 @@ exports.displayFilteredReleases = async (req, res, next) => {
     const minRating = req.query.min_rating;
     const platform = req.query.platform;
 
-    const list = await externalGames.getReleasesPastYear();
+    const list = await externalGames.getReleases();
     let gameList = list.results;
 
     if (minRating != null){
@@ -100,4 +100,28 @@ exports.displaySpecificRelease = async (req, res, next) => {
 
     return next(createError(400, err.message));
   }
+};
+
+exports.displayUpcoming = async (req, res, next) => {
+  try {
+    const month = dateHelper.getMonth();
+    const response = await externalGames.getReleases(range = 'current_month');
+    //console.log(response);
+    const releases = response.results;
+    const number = releases.length;
+
+    res.status(200);
+    return res.render('upcoming', {
+        title: `${month} releases`,
+        date: dateHelper,
+        totalNum: number,
+        month: month,
+        releasesAll: releases
+    });
+}
+catch (err){
+    res.status(400);
+
+    return next(createError(400, err.message));
+}
 };

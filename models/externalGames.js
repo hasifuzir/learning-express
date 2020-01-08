@@ -8,12 +8,21 @@ const dateHelper = require('../helpers/dateHelper');
 /* Parameters: ordering , order of request to RAWG
     -added , most popular games on RAWG (how many users added it to their lists)
 */
-exports.getReleasesPastYear = (ordering = '-added') => {
+exports.getReleases = (range = 'past_year', ordering = '-added') => {
     try {
-        const url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDateNoTime(dateHelper.dateYearAgo()) + ',' + dateHelper.getDateNoTime() + '&ordering=' + ordering + '&page_size=40';
+        let url = null;
 
+        if (range === 'past_year'){
+            url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDateNoTime(dateHelper.dateYearAgo()) + ',' + dateHelper.getDateNoTime() + '&ordering=' + ordering + '&page_size=40';
+        }
+        else if (range === 'current_month'){
+            url = 'https://api.rawg.io/api/games?dates=' + dateHelper.getDateNoTime() + ',' + dateHelper.getDateNoTime(dateHelper.dateEndOfMonth()) + '&ordering=' + ordering + '&page_size=40';
+
+        }
+        else {
+            throw new Error('Invalid range parameter passed')
+        }
         console.log(url);
-
 
         return axios.get(url)
             .then(response => {

@@ -1,6 +1,4 @@
 const express = require('express');
-const createError = require('http-errors');
-const axios = require('axios');
 
 //Helpers
 const schemas = require('../helpers/schemas');
