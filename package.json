@@ -16,7 +16,7 @@
     "lodash": "latest"
   },
   "devDependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "celebrate": "^11.0.0",
     "joi": "^14.3.1"
   }
